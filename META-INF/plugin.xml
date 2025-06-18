@@ -19,6 +19,40 @@
   </extensions>
 
   <actions>
-    <!-- Add your actions here -->
+    <group id="CommunityHttpClient.NewQuickAccessGroup" text="New..." popup="true">
+      <add-to-group group-id="MainMenu" anchor="first"/>
+      <action id="CommunityHttpClient.NewEmptyGetRequest"
+              class="com.example.communityhttpclient.actions.NewEmptyGetRequestAction"
+              text="GET Request"/>
+      <action id="CommunityHttpClient.NewPostTextBodyRequest"
+              class="com.example.communityhttpclient.actions.NewPostTextBodyRequestAction"
+              text="POST Text Body"/>
+      <action id="CommunityHttpClient.NewPostParametersBodyRequest"
+              class="com.example.communityhttpclient.actions.NewPostParametersBodyRequestAction"
+              text="POST Parameters Body"/>
+      <action id="CommunityHttpClient.NewPostFormWithTextFieldRequest"
+              class="com.example.communityhttpclient.actions.NewPostFormWithTextFieldRequestAction"
+              text="POST Form with a Text Field"/>
+      <action id="CommunityHttpClient.NewPostFormWithFileFieldRequest"
+              class="com.example.communityhttpclient.actions.NewPostFormWithFileFieldRequestAction"
+              text="POST Form with a File Field"/>
+      <action id="CommunityHttpClient.NewGraphQLQueryRequest"
+              class="com.example.communityhttpclient.actions.NewGraphQLQueryRequestAction"
+              text="GraphQL Query Request"/>
+      <action id="CommunityHttpClient.NewWebSocketRequest"
+              class="com.example.communityhttpclient.actions.NewWebSocketRequestAction"
+              text="WebSocket Request"/>
+      <separator/>
+      <action id="CommunityHttpClient.NewVariableInPublicFile"
+              class="com.example.communityhttpclient.actions.NewVariableInPublicFileAction"
+              text="Variable in Public File"/>
+      <action id="CommunityHttpClient.NewVariableInPrivateFile"
+              class="com.example.communityhttpclient.actions.NewVariableInPrivateFileAction"
+              text="Variable in Private File"/>
+      <separator/>
+      <action id="CommunityHttpClient.NewAuthConfiguration"
+              class="com.example.communityhttpclient.actions.NewAuthConfigurationAction"
+              text="Auth Configuration"/>
+    </group>
   </actions>
 </idea-plugin>
