@@ -16,6 +16,10 @@
     <lang.parserDefinition language="HTTP" implementationClass="com.example.communityhttpclient.lang.parser.HTTPParserDefinition"/>
     <lang.syntaxHighlighterFactory language="HTTP" implementationClass="com.example.communityhttpclient.lang.highlight.HTTPSyntaxHighlighterFactory"/>
     <completion.contributor language="HTTP" implementationClass="com.example.communityhttpclient.completion.HTTPCompletionContributor"/>
+    <toolWindow id="CommunityHttpClient.RequestResponseToolWindow"
+                anchor="bottom"
+                factoryClass="com.example.communityhttpclient.toolwindows.RequestResponseToolWindowFactory"
+                icon="AllIcons.General.Messages"/>
   </extensions>
 
   <actions>
