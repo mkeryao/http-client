@@ -1,0 +1,28 @@
+### Get all items (uses 'host' and 'api_version' from the selected environment)
+GET {{host}}/api/{{api_version}}/items
+X-Auth-Token: {{auth_token}}
+User-Agent: {{default_user_agent}}
+X-Common-Header: {{common_header_value}}
+
+### Create a new item (uses 'host' and 'api_version')
+POST {{host}}/api/{{api_version}}/items
+X-Auth-Token: {{auth_token}}
+User-Agent: {{default_user_agent}}
+Content-Type: application/json
+
+{
+  "name": "New Item from HTTP Client",
+  "description": "Sent using {{host}} with token {{auth_token}}",
+  "properties": {
+    "timeout_configured": "{{timeout_ms}}ms"
+  }
+}
+
+### Request that might use a variable that needs prompting (conceptual)
+# This assumes a mechanism exists to handle $prompt_ variables,
+# or it's simply left as is if not found in the environment.
+GET {{host}}/api/{{api_version}}/admin/status
+X-Auth-Token: {{auth_token}}
+X-Prod-Token: {{production_token}}
+
+###

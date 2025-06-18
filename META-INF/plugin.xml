@@ -1,0 +1,24 @@
+<idea-plugin>
+  <id>com.example.communityhttpclient</id>
+  <name>Community HTTP Client</name>
+  <vendor email="support@example.com" url="https://www.example.com">YourCompany</vendor>
+
+  <description><![CDATA[
+    Provides support for .http files, enabling easy API interaction and testing directly within the IDE.
+  ]]></description>
+
+  <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.platform</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <fileTypeFactory implementation="com.example.communityhttpclient.lang.HTTPFileTypeFactory"/>
+    <lang.parserDefinition language="HTTP" implementationClass="com.example.communityhttpclient.lang.parser.HTTPParserDefinition"/>
+    <lang.syntaxHighlighterFactory language="HTTP" implementationClass="com.example.communityhttpclient.lang.highlight.HTTPSyntaxHighlighterFactory"/>
+    <completion.contributor language="HTTP" implementationClass="com.example.communityhttpclient.completion.HTTPCompletionContributor"/>
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+</idea-plugin>
