@@ -1,0 +1,48 @@
+body {
+    font-family: sans-serif;
+}
+
+.dropdown {
+    position: absolute; /* Changed from relative to absolute for top-left positioning */
+    top: 20px; /* Added for positioning */
+    left: 20px; /* Added for positioning */
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px; /* Adjusted padding */
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Added for rounded corners */
+}
+
+.dropbtn:hover, .dropbtn:focus { /* Added focus for accessibility */
+    background-color: #3e8e41;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px; /* Adjusted min-width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 4px; /* Added for rounded corners */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+/* JavaScript will handle the display of the dropdown on click */
