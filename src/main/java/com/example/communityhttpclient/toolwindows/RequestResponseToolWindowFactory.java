@@ -11,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ItemEvent; // Added for ItemListener
+
+// Imports for EditorTextField and JsonFileType
+import com.intellij.json.JsonFileType;
+import com.intellij.ui.EditorTextField;
+import com.intellij.openapi.project.Project; // Already a parameter, but good for clarity
 
 public class RequestResponseToolWindowFactory implements ToolWindowFactory, DumbAware {
     @Override
@@ -87,8 +93,50 @@ public class RequestResponseToolWindowFactory implements ToolWindowFactory, Dumb
 
         requestDetailsTabs.addTab("Parameters", parametersPanel);
 
-        // --- Body Tab (Placeholder) ---
-        requestDetailsTabs.addTab("Body", new JLabel(" Request Body content will go here (selector + editor) ", SwingConstants.CENTER));
+        // --- Body Tab ---
+        JPanel bodyMainPanel = new JPanel(new BorderLayout());
+
+        // Body Type Selector
+        JPanel bodyTypeSelectorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        bodyTypeSelectorPanel.add(new JLabel("Body Type:"));
+        String[] bodyTypes = {
+                "None", "Raw (Text)", "Raw (JSON)", "Raw (XML)", "Raw (HTML)",
+                "x-www-form-urlencoded", "form-data"
+        };
+        JComboBox<String> bodyTypeComboBox = new JComboBox<>(bodyTypes);
+        bodyTypeSelectorPanel.add(bodyTypeComboBox);
+        bodyMainPanel.add(bodyTypeSelectorPanel, BorderLayout.NORTH);
+
+        // Panel for different body editors using CardLayout
+        JPanel bodyEditorsPanel = new JPanel(new CardLayout());
+        bodyEditorsPanel.add(new JLabel("No body content", SwingConstants.CENTER), "None");
+        bodyEditorsPanel.add(new JLabel("Raw Text editor here (EditorTextField)", SwingConstants.CENTER), "Raw (Text)");
+
+        // JSON Editor
+        EditorTextField jsonEditor = new EditorTextField("", project, JsonFileType.INSTANCE);
+        jsonEditor.setOneLineMode(false); // Make it multi-line
+        jsonEditor.setEnsureWillComputePreferredSize(true); // Helps with initial sizing
+        bodyEditorsPanel.add(jsonEditor, "Raw (JSON)"); // Replaced JLabel with EditorTextField
+
+        bodyEditorsPanel.add(new JLabel("Raw XML editor here (EditorTextField)", SwingConstants.CENTER), "Raw (XML)");
+        bodyEditorsPanel.add(new JLabel("Raw HTML editor here (EditorTextField)", SwingConstants.CENTER), "Raw (HTML)");
+        bodyEditorsPanel.add(new JLabel("x-www-form-urlencoded editor here (table)", SwingConstants.CENTER), "x-www-form-urlencoded");
+        bodyEditorsPanel.add(new JLabel("form-data editor here (table with file support)", SwingConstants.CENTER), "form-data");
+
+        bodyMainPanel.add(bodyEditorsPanel, BorderLayout.CENTER);
+
+        // Add ItemListener to ComboBox to switch cards
+        bodyTypeComboBox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                CardLayout cl = (CardLayout) (bodyEditorsPanel.getLayout());
+                cl.show(bodyEditorsPanel, (String) e.getItem());
+            }
+        });
+
+        // Show "None" by default
+        ((CardLayout) bodyEditorsPanel.getLayout()).show(bodyEditorsPanel, "None");
+
+        requestDetailsTabs.addTab("Body", bodyMainPanel);
 
         detailedRequestPanel.add(requestDetailsTabs, BorderLayout.CENTER);
 

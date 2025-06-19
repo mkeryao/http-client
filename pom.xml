@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example.communityhttpclient</groupId>
+    <artifactId>community-http-client</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Community HTTP Client</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <!-- IntelliJ Platform Properties -->
+        <platform.version>2023.2.5</platform.version>
+        <plugin.id>com.example.communityhttpclient</plugin.id>
+        <!-- This should match the <id> in plugin.xml -->
+        <plugin.version>1.0.0</plugin.version>
+        <!-- This should match the <version> in plugin.xml if you want them synced -->
+    </properties>
+
+    <dependencies>
+        <!-- IntelliJ Platform dependency -->
+        <dependency>
+            <groupId>com.jetbrains.intellij.idea</groupId>
+            <artifactId>ideaIU</artifactId>
+            <version>${platform.version}</version>
+            <scope>provided</scope>
+            <!-- 'provided' because the platform JARs are available in the IDE runtime -->
+        </dependency>
+
+        <!-- JetBrains Annotations -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>24.0.0</version> <!-- Use a recent compatible version -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- For JSON PSI classes like com.intellij.json.JsonFileType -->
+        <!-- This dependency might be implicitly part of the platform, -->
+        <!-- but it's good to be explicit if direct PSI usage is heavy. -->
+        <!-- The exact artifact for platform modules can vary. -->
+        <!-- If this doesn't resolve, it might be found under group 'com.jetbrains.intellij.platform' -->
+        <dependency>
+            <groupId>com.jetbrains.intellij.platform</groupId>
+            <artifactId>json</artifactId>
+            <version>${platform.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Add other platform module dependencies here if needed, e.g., for XML PSI: -->
+        <!--
+        <dependency>
+            <groupId>com.jetbrains.intellij.platform</groupId>
+            <artifactId>xml-psi-impl</artifactId>
+            <version>${platform.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <!-- IntelliJ Plugin for Maven -->
+            <plugin>
+                <groupId>org.jetbrains.intellij.plugins</groupId>
+                <artifactId>maven-intellij-plugin</artifactId>
+                <version>1.17.0</version> <!-- Use a recent version of the plugin -->
+                <configuration>
+                    <!-- IntelliJ Platform version -->
+                    <version>${platform.version}</version>
+                    <!-- The path to the plugin.xml file, relative to the project root -->
+                    <pluginXml>${project.basedir}/src/main/resources/META-INF/plugin.xml</pluginXml>
+                    <!-- Plugin ID, matches <id> in plugin.xml -->
+                    <pluginId>${plugin.id}</pluginId>
+                    <!-- Vendor information -->
+                    <vendor>YourCompany</vendor>
+                    <!-- You might want to use a property for this if it's also in plugin.xml -->
+                    <!-- updateSinceUntilBuild: Manages compatibility range. False to disable auto-update from plugin.xml -->
+                    <updateSinceUntilBuild>false</updateSinceUntilBuild>
+                    <!-- Since/Until build numbers can be set explicitly if needed -->
+                    <!-- <sinceBuild>232</sinceBuild> -->
+                    <!-- <untilBuild>232.*</untilBuild> -->
+
+                    <!-- By default, the plugin downloads IDE distributions to ~/.m2/repository/com/jetbrains/intellij/idea.
+                         You can specify a different location using the <ideaDependencyCachePath> property. -->
+
+                    <!-- If your plugin depends on other plugins, list them here. E.g.: -->
+                    <!--
+                    <plugins>
+                        <plugin>
+                            <dependency>com.intellij.modules:java</dependency>
+                        </plugin>
+                    </plugins>
+                    -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-descriptor</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-instrument</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>instrumentCode</goal>
+                        </goals>
+                    </execution>
+                     <execution>
+                        <id>default-patch</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>patchPluginXml</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+         <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>
